@@ -8,7 +8,7 @@ import { setToken } from "@/lib/auth";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [account, setAccount] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -17,15 +17,15 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
 
-    if (!account.trim() || !password.trim()) {
-      setError("请输入账号和密码");
+    if (!username.trim() || !password.trim()) {
+      setError("请输入用户名和密码");
       return;
     }
 
     setSubmitting(true);
     try {
       const res = await post<{ token: string }>("/api/auth/login", {
-        account: account.trim(),
+        username: username.trim(),
         password,
       });
 
@@ -55,14 +55,14 @@ export default function LoginPage() {
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            用户名或邮箱
+            用户名
           </label>
           <input
             type="text"
-            value={account}
-            onChange={(e) => setAccount(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="请输入用户名或邮箱"
+            placeholder="请输入用户名"
             autoFocus
           />
         </div>

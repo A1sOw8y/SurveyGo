@@ -9,7 +9,6 @@ import { setToken } from "@/lib/auth";
 export default function RegisterPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -18,8 +17,8 @@ export default function RegisterPage() {
     e.preventDefault();
     setError("");
 
-    if (!username.trim() || !email.trim() || !password.trim()) {
-      setError("请填写所有字段");
+    if (!username.trim() || !password.trim()) {
+      setError("请填写用户名和密码");
       return;
     }
 
@@ -27,7 +26,6 @@ export default function RegisterPage() {
     try {
       const res = await post<{ token: string }>("/api/auth/register", {
         username: username.trim(),
-        email: email.trim(),
         password,
       });
 
@@ -66,19 +64,6 @@ export default function RegisterPage() {
             className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
             placeholder="2-20位字母、数字、下划线或中文"
             autoFocus
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            邮箱
-          </label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="请输入邮箱地址"
           />
         </div>
 
