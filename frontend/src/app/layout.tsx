@@ -32,7 +32,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <footer className="text-center text-sm text-gray-400 py-6 border-t border-gray-200">
-          SurveyGo · 在线问卷调查系统 · 实训项目
+          SurveyGo · 在线问卷调查系统
         </footer>
       </body>
     </html>

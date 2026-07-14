@@ -67,7 +67,7 @@ export default function QuestionEditor({
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-5 mb-4">
+    <div className="bg-white border border-gray-200 rounded-xl p-5 mb-4 shadow-sm hover:shadow-md transition-shadow">
       {/* 顶部操作栏 */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-3">

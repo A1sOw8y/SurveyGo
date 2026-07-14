@@ -30,16 +30,13 @@ export default function SurveyForm({
   const [answers, setAnswers] = useState<Record<number, Answer>>({});
 
   const setAnswer = (qid: number, patch: Partial<Answer>) => {
-    setAnswers((prev) => ({
-      ...prev,
-      [qid]: {
-        question_id: qid,
-        option_ids: "",
-        text_content: "",
-        ...prev[qid],
-        ...patch,
-      },
-    }));
+    setAnswers((prev) => {
+      const old = prev[qid] || { question_id: qid, option_ids: "", text_content: "" };
+      return {
+        ...prev,
+        [qid]: { ...old, ...patch },
+      };
+    });
   };
 
   // 处理单选
@@ -66,7 +63,7 @@ export default function SurveyForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {questions.map((q, idx) => (
-        <div key={q.id} className="bg-white rounded-lg border border-gray-200 p-5">
+        <div key={q.id} className="bg-white rounded-xl border border-gray-200 p-5 md:p-6 shadow-sm hover:shadow-md transition-shadow">
           <h3 className="font-medium text-gray-900 mb-3">
             {idx + 1}. {q.title}
             {q.required && <span className="text-red-400 ml-1">*</span>}
@@ -133,7 +130,7 @@ export default function SurveyForm({
       <button
         type="submit"
         disabled={submitting}
-        className="w-full bg-gray-900 text-white py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors disabled:opacity-60 cursor-pointer text-lg"
+        className="w-full bg-gray-900 text-white py-3.5 rounded-xl font-medium hover:bg-gray-800 transition-all disabled:opacity-60 cursor-pointer text-base shadow-md hover:shadow-lg"
       >
         {submitting ? "提交中..." : "提交问卷"}
       </button>
