@@ -107,6 +107,7 @@ export default function QuestionEditor({
         </div>
 
         <button
+          type="button"
           onClick={onDelete}
           className="text-sm text-red-400 hover:text-red-600 transition-colors cursor-pointer"
         >
@@ -140,6 +141,7 @@ export default function QuestionEditor({
               />
               {options.length > 2 && (
                 <button
+                  type="button"
                   onClick={() => removeOption(idx)}
                   className="text-gray-300 hover:text-red-400 text-sm cursor-pointer"
                   title="删除选项"
@@ -151,6 +153,7 @@ export default function QuestionEditor({
           ))}
           {options.length < 10 && (
             <button
+              type="button"
               onClick={addOption}
               className="text-sm text-blue-500 hover:text-blue-600 cursor-pointer mt-1"
             >
