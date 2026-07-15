@@ -14,7 +14,6 @@ export default function SurveyCard({
   title,
   description,
   question_count,
-  response_count,
   created_at,
 }: SurveyCardProps) {
   const date = new Date(created_at).toLocaleDateString("zh-CN");
@@ -22,16 +21,15 @@ export default function SurveyCard({
   return (
     <Link
       href={`/survey/${id}`}
-      className="block bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md hover:border-blue-300 transition-all"
+      className="flex flex-col bg-white rounded-xl border border-gray-200 p-5 h-full min-h-[120px] hover:shadow-md hover:border-blue-300 transition-all"
     >
       <h3 className="font-semibold text-gray-900 truncate">{title}</h3>
-      {description && (
-        <p className="text-sm text-gray-500 mt-1 line-clamp-2">{description}</p>
-      )}
-      <div className="flex items-center gap-4 mt-3 text-xs text-gray-400">
-        <span>{question_count} 题</span>
-        <span>{response_count} 份答卷</span>
-        <span className="ml-auto">{date}</span>
+      <p className="text-sm text-gray-500 mt-1 line-clamp-2 flex-1">
+        {description || "暂无描述"}
+      </p>
+      <div className="flex items-center justify-between mt-3 pt-3 border-t border-gray-100 text-xs text-gray-400">
+        <span>{question_count} 道题</span>
+        <span>{date}</span>
       </div>
     </Link>
   );
