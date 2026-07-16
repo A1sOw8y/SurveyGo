@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { get, put, del } from "@/lib/api";
 import { isLoggedIn } from "@/lib/auth";
@@ -46,8 +46,26 @@ export default function MyPage() {
   const [totalResponses, setTotalResponses] = useState(0);
   const [statsLoading, setStatsLoading] = useState(false);
   const [copiedId, setCopiedId] = useState<number | null>(null);
+  const [loggedIn] = useState(() => isLoggedIn());
+  const [refresh, setRefresh] = useState(0);
 
-  if (typeof window !== "undefined" && !isLoggedIn()) {
+  const refreshList = () => setRefresh((r) => r + 1);
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await get<{ items: SurveyItem[] }>("/api/user/surveys");
+        if (res.code === 200 && res.data) {
+          setSurveys(res.data.items);
+        }
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [refresh]);
+
+  if (!loggedIn) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-20 text-center">
         <p className="text-gray-500 mb-4">请先登录</p>
@@ -58,28 +76,12 @@ export default function MyPage() {
     );
   }
 
-  const fetchSurveys = useCallback(async () => {
-    setLoading(true);
-    try {
-      const res = await get<{ items: SurveyItem[] }>("/api/user/surveys");
-      if (res.code === 200 && res.data) {
-        setSurveys(res.data.items);
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchSurveys();
-  }, [fetchSurveys]);
-
   // 切换发布/关闭
   const handleToggleStatus = async (id: number, current: string) => {
     const action = current === "published" ? "close" : "publish";
     const res = await put(`/api/user/surveys/${id}/publish`, { action });
     if (res.code === 200) {
-      fetchSurveys();
+      refreshList();
     }
   };
 
@@ -89,7 +91,7 @@ export default function MyPage() {
     const res = await del(`/api/surveys/${id}`);
     if (res.code === 200) {
       if (expandedId === id) setExpandedId(null);
-      fetchSurveys();
+      refreshList();
     }
   };
 

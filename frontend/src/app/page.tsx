@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { get } from "@/lib/api";
 import SurveyCard from "@/components/SurveyCard";
 
@@ -19,25 +19,27 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [keyword, setKeyword] = useState("");
 
-  const fetchSurveys = useCallback(async (kw: string) => {
-    setLoading(true);
-    try {
-      const res = await get<{ items: SurveyItem[] }>(
-        `/api/surveys?keyword=${encodeURIComponent(kw)}`
-      );
-      if (res.code === 200 && res.data) {
-        setSurveys(res.data.items);
-      }
-    } catch {
-      setSurveys([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchSurveys(keyword);
-  }, [keyword, fetchSurveys]);
+    let cancelled = false;
+
+    (async () => {
+      setLoading(true);
+      try {
+        const res = await get<{ items: SurveyItem[] }>(
+          `/api/surveys?keyword=${encodeURIComponent(keyword)}`
+        );
+        if (!cancelled && res.code === 200 && res.data) {
+          setSurveys(res.data.items);
+        }
+      } catch {
+        if (!cancelled) setSurveys([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+
+    return () => { cancelled = true; };
+  }, [keyword]);
 
   return (
     <div>

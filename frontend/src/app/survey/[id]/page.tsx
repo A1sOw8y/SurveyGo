@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { get, post } from "@/lib/api";
 import SurveyForm from "@/components/SurveyForm";
 
@@ -87,9 +88,9 @@ export default function SurveyFillPage() {
     return (
       <div className="max-w-2xl mx-auto px-4 py-20 text-center">
         <p className="text-gray-500 mb-4">{error}</p>
-        <a href="/" className="text-blue-600 hover:underline">
+        <Link href="/" className="text-blue-600 hover:underline">
           返回首页
-        </a>
+        </Link>
       </div>
     );
   }
@@ -102,12 +103,12 @@ export default function SurveyFillPage() {
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">提交成功</h2>
           <p className="text-gray-500 mb-8">感谢您的参与！您的回答已成功提交。</p>
-          <a
+          <Link
             href="/"
             className="inline-block bg-gray-900 text-white px-6 py-2.5 rounded-lg font-medium hover:bg-gray-800 transition-colors"
           >
             返回首页
-          </a>
+          </Link>
         </div>
     );
   }

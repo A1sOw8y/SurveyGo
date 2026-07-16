@@ -2,21 +2,17 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { isLoggedIn, removeToken } from "@/lib/auth";
 
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const [loggedIn, setLoggedIn] = useState(false);
 
-  useEffect(() => {
-    setLoggedIn(isLoggedIn());
-  }, [pathname]); // 路由变化时重新检查登录态
+  // 每次渲染时直接读 localStorage，pathname 变化自动触发重渲染
+  const loggedIn = isLoggedIn();
 
   const handleLogout = () => {
     removeToken();
-    setLoggedIn(false);
     router.push("/");
   };
 
