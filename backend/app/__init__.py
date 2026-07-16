@@ -26,6 +26,11 @@ def create_app():
     app.register_blueprint(survey_bp, url_prefix="/api/surveys")
     app.register_blueprint(user_bp, url_prefix="/api/user")
 
+    # 自动建表（数据库不存在的话创建，存在则跳过）
+    from app import models  # noqa: F401  确保模型已导入
+    with app.app_context():
+        db.create_all()
+
     # 健康检查
     @app.route("/api/health")
     def health():
