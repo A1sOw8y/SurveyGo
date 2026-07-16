@@ -1,6 +1,6 @@
 # SurveyGo API 接口文档
 
-> 后端部署地址：`https://surveygo-production.up.railway.app`  
+> 后端部署地址：`https://surveygo-production-d2eb.up.railway.app`  
 > 请求格式：`application/json`  
 > 认证方式：需登录的接口在请求头携带 `Authorization: Bearer <token>`
 
@@ -63,7 +63,6 @@ POST /api/auth/register
 }
 ```
 
-> 📸 **截图位置：注册接口 Postman 测试截图**
 
 ---
 
@@ -100,7 +99,6 @@ POST /api/auth/login
 }
 ```
 
-> 📸 **截图位置：登录接口 Postman 测试截图**
 
 ---
 
@@ -144,7 +142,6 @@ GET /api/surveys?page=1&per_page=12&keyword=消费
 }
 ```
 
-> 📸 **截图位置：问卷列表接口 Postman 测试截图**
 
 ---
 
@@ -203,7 +200,6 @@ GET /api/surveys/<问卷ID>
 }
 ```
 
-> 📸 **截图位置：问卷详情接口 Postman 测试截图**
 
 ---
 
@@ -247,7 +243,6 @@ POST /api/surveys/<问卷ID>/submit
 }
 ```
 
-> 📸 **截图位置：提交答卷接口 Postman 测试截图**
 
 ---
 
@@ -320,7 +315,6 @@ POST /api/surveys
 }
 ```
 
-> 📸 **截图位置：创建问卷接口 Postman 测试截图**
 
 ---
 
@@ -343,7 +337,6 @@ PUT /api/surveys/<问卷ID>
 }
 ```
 
-> 📸 **截图位置：编辑问卷接口 Postman 测试截图**
 
 ---
 
@@ -469,7 +462,6 @@ GET /api/surveys/<问卷ID>/stats
 }
 ```
 
-> 📸 **截图位置：统计数据接口 Postman 测试截图**
 
 ---
 
